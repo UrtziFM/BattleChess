@@ -1,0 +1,35 @@
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BattleChess Game</title>
+        <script type="text/javascript" src="App.js"></script>
+        <link rel="stylesheet" href="Styles.css" type="text/css">
+    </head>
+    <body>
+        <canvas id="canvas" style="display: none"></canvas>
+        <div id="load" class="screen" style="display: block">
+            Loading, please wait...
+        </div>
+        <div id="start" class="screen" style="display: none">
+            <img src="assets/starwars-start-splash.png"/>
+            <div class="startScreen"><u>Instructions:</u><br>·Try to survive 30 seconds to defeat UrtziAI
+            <br>·Use your keyboard to move the spaceship and kill First Order ships
+            <br>·Be fast shooting but keep calm</div>
+            <button onclick="window.gui.startGame()">The Force be with you!</button>
+        </div>
+        <div id="end" class="screen" style="display: none">
+            <img src="assets/asteroids-gameover-splash.png"/>
+            <button onclick="window.gui.startGame()">Let's play again!</button>
+        </div>
+        <div id="win" class="screen" style="display: none">
+            <img src="assets/asteroids-gamewin-splash.png"/>
+            <button onclick="window.gui.startGame()">Let's play again!</button>
+        </div>
+    </body>
+    <footer>
+        <div>
+          <small>Copyright &copy; Urtzi Arana Santamaria</small>
+        </div>
+    </footer>
+</html>
