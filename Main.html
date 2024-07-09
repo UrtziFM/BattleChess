@@ -1,12 +1,9 @@
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BattleChess Game</title>
-        <script src="Fx.js" charset="utf-8"></script>
-        <script src="Gameloop.js" charset="utf-8"></script>
-        <script src="Game.js" charset="utf-8"></script>
-        <script src="Gui.js" charset="utf-8"></script>
         <script src="App.js" charset="utf-8"></script>
         <link rel="stylesheet" href="Styles.css" type="text/css">
     </head>
@@ -20,15 +17,15 @@
             <div class="startScreen"><u>Instructions:</u><br>·Try to defeat UrtziAI playing Chess
             <br>·Start the game as you would be a Great ChessMaster
             <br>·And don't be afraid of the battlefield</div>
-            <button onclick="window.gui.startGame()">Start the game</button>
+            <button onclick="window.location.href='Chess.html'">Start the game</button>
         </div>
         <div id="end" class="screen" style="display: none">
             <img src="assets/gameOverBattleChess.png"/>
-            <button onclick="window.gui.startGame()">Let's play again!</button>
+            <button onclick="window.location.href='Chess.html'">Let's play again!</button>
         </div>
         <div id="win" class="screen" style="display: none">
             <img src="assets/gameWinBattleChess.png"/>
-            <button onclick="window.gui.startGame()">Let's play again!</button>
+            <button onclick="window.location.href='Chess.html'">Let's play again!</button>
         </div>
     </body>
     <footer>
