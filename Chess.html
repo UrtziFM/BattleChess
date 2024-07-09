@@ -4,17 +4,37 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BattleChess Game</title>
-    <script src="App.js" charset="utf-8"></script>
     <link rel="stylesheet" href="Styles.css" type="text/css">
+    <script src="App.js" charset="utf-8"></script>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    <div id="chessboard"></div>
-    <script src="Chess.js" charset="utf-8"></script>
-</body>
-<footer>
-    <div>
-      <small>Copyright &copy; Urtzi Arana Santamaria</small>
+    <div id="game-container">
+        <canvas id="canvas"></canvas>
+        <div id="chessboard"></div>
     </div>
-</footer>
+    <div id="end" class="screen" style="display: none">
+        <img src="assets/gameOverBattleChess.png"/>
+        <button onclick="window.location.href='index.html'">Return to Main Menu</button>
+    </div>
+    <div id="win" class="screen" style="display: none">
+        <img src="assets/gameWinBattleChess.png"/>
+        <button onclick="window.location.href='index.html'">Return to Main Menu</button>
+    </div>
+    <script>
+        function endGame(win) {
+            document.getElementById('game-container').style.display = 'none';
+            if (win) {
+                document.getElementById('win').style.display = 'block';
+            } else {
+                document.getElementById('end').style.display = 'block';
+            }
+        }
+
+        // Example usage:
+        // endGame(true); // Call this function when the player wins
+        // endGame(false); // Call this function when the player loses
+    </script>
+</body>
 </html>
+
+
