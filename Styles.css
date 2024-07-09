@@ -34,6 +34,13 @@ button:hover  {
     font-size: 0.9em;
 }
 
+.startChess {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 .screen {
     position: absolute;
     top: 50%;
