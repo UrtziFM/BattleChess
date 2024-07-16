@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BattleChess Game</title>
+    <script type="text/javascript" src="App.js"></script>
     <link rel="stylesheet" href="Styles.css" type="text/css">
-    <script type="module" src="./App.js" defer></script>
 </head>
 <body>
     <div id="game-container">
@@ -14,11 +14,11 @@
     </div>
     <div id="end" class="screen" style="display: none">
         <img src="assets/gameOverBattleChess.png"/>
-        <button onclick="window.location.href='index.html'">Return to Main Menu</button>
+        <button onclick="window.location.href='Main.html'">Return to Main Menu</button>
     </div>
     <div id="win" class="screen" style="display: none">
         <img src="assets/gameWinBattleChess.png"/>
-        <button onclick="window.location.href='index.html'">Return to Main Menu</button>
+        <button onclick="window.location.href='Main.html'">Return to Main Menu</button>
     </div>
     <script>
         function endGame(win) {
@@ -36,5 +36,3 @@
     </script>
 </body>
 </html>
-
-
