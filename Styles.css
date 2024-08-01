@@ -6,6 +6,35 @@ body  {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#start.screen {
+    width: 80%;
+    height: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.startScreen {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.startChess {
+    max-width: auto;
+    height: 60%;
+    display: block;
+    margin: 0 auto;
+}
+
+.startHack {
+    max-width: auto;
+    height: 15%;
+    display: block;
+    margin: 0 auto;
+}
+
 button  {
     outline: none;
     border: none;
@@ -28,25 +57,6 @@ button:hover  {
     background-color: #3498db;
 }
 
-.startScreen {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 0.9em;
-}
-
-.startChess {
-    max-width: 80%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
-
-.screen {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 
 #load {
     font-size: 3em;
