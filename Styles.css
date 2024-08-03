@@ -71,3 +71,12 @@ button:hover  {
 }
 
 /* Specific Chess.html styles */
+.text-align-center {
+    text-align: center;
+}
+
+#myBoard {
+    max-width: 100%;
+    height: auto;
+    overflow: scroll;
+}
