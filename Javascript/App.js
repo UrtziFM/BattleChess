@@ -22,6 +22,7 @@ var positionCount;
 var config = {
   draggable: true,
   position: 'start',
+  pieceTheme: 'assets/pieces/{piece}.png', // As we are using chessboard.js library is requeried correct names
   onDragStart: onDragStart,
   onDrop: onDrop,
   onMouseoutSquare: onMouseoutSquare,
