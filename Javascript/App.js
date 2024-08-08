@@ -258,20 +258,21 @@ function minimax(game, depth, alpha, beta, isMaximizingPlayer, sum, color) {
   var currMove;
   // Maximum depth exceeded or node is a terminal node (no children)
   if (depth === 0 || children.length === 0) {
-    return [null, sum];
+    return [null, sum, []];
   }
 
   // Find maximum/minimum from list of 'children' (possible moves)
   var maxValue = Number.NEGATIVE_INFINITY;
   var minValue = Number.POSITIVE_INFINITY;
-  var bestMove;
+  var evaluatedMoves = [];
+
   for (var i = 0; i < children.length; i++) {
     currMove = children[i];
 
     // Note: in our case, the 'children' are simply modified game states
     var currPrettyMove = game.ugly_move(currMove);
     var newSum = evaluateBoard(game, currPrettyMove, sum, color);
-    var [childBestMove, childValue] = minimax(
+    var [childBestMove, childValue, childEvaluatedMoves] = minimax(
       game,
       depth - 1,
       alpha,
@@ -283,10 +284,12 @@ function minimax(game, depth, alpha, beta, isMaximizingPlayer, sum, color) {
 
     game.undo();
 
+    // Store the current move and its evaluated value
+    evaluatedMoves.push({ move: currPrettyMove, value: childValue });
+
     if (isMaximizingPlayer) {
       if (childValue > maxValue) {
         maxValue = childValue;
-        bestMove = currPrettyMove;
       }
       if (childValue > alpha) {
         alpha = childValue;
@@ -294,7 +297,6 @@ function minimax(game, depth, alpha, beta, isMaximizingPlayer, sum, color) {
     } else {
       if (childValue < minValue) {
         minValue = childValue;
-        bestMove = currPrettyMove;
       }
       if (childValue < beta) {
         beta = childValue;
@@ -307,10 +309,16 @@ function minimax(game, depth, alpha, beta, isMaximizingPlayer, sum, color) {
     }
   }
 
+  // Sort evaluated moves by their value in descending order
+  evaluatedMoves.sort((a, b) => b.value - a.value);
+
+  // Return the top 3 moves
+  var topMoves = evaluatedMoves.slice(0, 3);
+
   if (isMaximizingPlayer) {
-    return [bestMove, maxValue];
+    return [topMoves[0]?.move || null, maxValue, topMoves];
   } else {
-    return [bestMove, minValue];
+    return [topMoves[0]?.move || null, minValue, topMoves];
   }
 }
 
@@ -365,7 +373,7 @@ function getBestMove(game, color, currSum) {
   }
 
   var d = new Date().getTime();
-  var [bestMove, bestMoveValue] = minimax(
+  var [bestMove, bestMoveValue, topMoves] = minimax(
     game,
     depth,
     Number.NEGATIVE_INFINITY,
@@ -382,7 +390,23 @@ function getBestMove(game, color, currSum) {
   $('#time').text(moveTime / 1000);
   $('#positions-per-s').text(Math.round(positionsPerS));
 
+  // Update the HTML with the top 3 moves
+  updateTopMovesDisplay(topMoves);
+
   return [bestMove, bestMoveValue];
+}
+
+function updateTopMovesDisplay(topMoves) {
+  const topMovesContainer = document.getElementById('top-moves');
+  topMovesContainer.innerHTML = ''; // Clear previous content
+  topMoves.forEach((moveObj, index) => {
+    const move = moveObj.move;
+    const value = moveObj.value;
+    const moveText = `${index + 1}º ${move.color === 'w' ? 'White' : 'Black'} ${move.piece.toUpperCase()} ${move.from} to ${move.to} : ${value}`;
+    const moveElement = document.createElement('p');
+    moveElement.textContent = moveText;
+    topMovesContainer.appendChild(moveElement);
+  });
 }
 
 /*
