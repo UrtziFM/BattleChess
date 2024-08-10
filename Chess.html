@@ -33,14 +33,6 @@
 <body>
     <main>
         <div class="container my-3">
-            <div class="row justify-content-center text-center mb-4">
-                <div class="col-md-12">
-                    <h1>Welcome to New BattleChess</h1>
-                    <p>Here we will learn how to hack chess using game theory based MinMax algorithm</p>
-                    <input type="checkbox" id="showHint" name="showHint" value="showHint">
-                        <label for="showHint">Check Start Button, Please</label>
-                </div>
-            </div>
             <div class="row flex-grow-1">
                 <div class="col-md-7 d-flex justify-content-center align-items-center">
                     <div id="myBoard"></div>
@@ -60,16 +52,16 @@
                         </div>
                         <div class="info-box text-center">
                             <h2 class="perfomance">UrtziAI Perfomance</h2>
-                                <div class="col-12">
-                                    <p><span id="position-count">0</span> &nbsp positions evaluated in &nbsp <span id="time">0</span>s.</p>
-                                </div>
-                                <div class="col-12">
-                                    <p>That's &nbsp <span id="positions-per-s">0</span> &nbsp positions / s.</p>
-                                </div>
+                                    <p class="perfomanceInfo"><span id="position-count">0</span> &nbsp positions evaluated in &nbsp <span id="time">0</span>s.</p>
+                                    <p class="perfomanceInfo">That's &nbsp <span id="positions-per-s">0</span> &nbsp positions / s.</p>
                         </div>
-                        <div class="info-box text-center">
-                            <h2>Top 3 Moves</h2>
+                        <div class="top text-center">
+                            <h2 class="topMoves">UrtziAI TOP 3 Moves</h2>
                             <div id="top-moves"></div>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="showHint" name="showHint" value="showHint">
+                                <label for="showHint">Check Start Button, Please</label>
                         </div>
                     <div class="form-group d-none">
                         <label for="search-depth">Search Depth (Black):</label>

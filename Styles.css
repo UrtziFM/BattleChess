@@ -114,7 +114,7 @@ main {
     color: white;
     padding: 15px;
     border-radius: 5px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     margin-left: 25px;
 }
 
@@ -138,17 +138,38 @@ main {
 .status {
     background-color: #000;
     color: white;
-    padding: 15px;
+    padding: 10px;
     border-radius: 5px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .perfomance {
     background-color: #000;
     color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.perfomanceInfo {
+    margin: 2px;
+}
+
+.top {
+    background-color: #A6784F;
+    color: white;
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 15px;
+    margin-left: 25px;
+}
+
+.topMoves {
+    background-color: #000;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .highlight-white {
