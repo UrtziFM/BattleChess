@@ -1,8 +1,9 @@
 /*
- * A simple chess AI, by someone who doesn't know how to play chess.
- * Uses the chessboard.js and chess.js libraries.
+ * This code is based in Zhang Zeyu Simple AI Chess Game, but modified to make it adapted to game goals:
+ * Learn & Play Chess hacking Game Theory 
+ * It's using the chessboard.js and chess.js libraries.
  *
- * Copyright (c) 2020 Zhang Zeyu
+ * Copyright (c) 2024 Urtzi Arana
  */
 
 var STACK_SIZE = 100; // maximum size of undo stack
