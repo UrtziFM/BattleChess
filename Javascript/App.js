@@ -484,23 +484,15 @@ $('#undoBtn').on('click', function () {
   }
 });
 
-// Function to reset the game
-function resetGame() {
-  game.reset();  // Reset the game to the initial position
-  board.start();  // Reset the board to the initial position
-  globalSum = 0;  // Reset the evaluation sum
-  $('#status').text('Game reset. No check, checkmate, or draw.');  // Reset the status
-  $('#advantageColor').text('Neither side');
-  $('#advantageNumber').text('0');
-  $('#advantageBar').attr({
-      'aria-valuenow': '0',
-      style: 'width: 50%',
-  });
+// Function to completely reload the page
+function resetGameAndReloadPage() {
+  // This will reload the current page, effectively resetting the game and all UI elements
+  window.location.reload();
 }
 
 // Event listener for the reset button
 $('#resetGameBtn').on('click', function () {
-  resetGame();
+  resetGameAndReloadPage();
 });
 
 
