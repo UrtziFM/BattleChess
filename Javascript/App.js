@@ -484,25 +484,25 @@ $('#undoBtn').on('click', function () {
   }
 });
 
-function redo() {
-  game.move(undo_stack.pop());
-  board.position(game.fen());
+// Function to reset the game
+function resetGame() {
+  game.reset();  // Reset the game to the initial position
+  board.start();  // Reset the board to the initial position
+  globalSum = 0;  // Reset the evaluation sum
+  $('#status').text('Game reset. No check, checkmate, or draw.');  // Reset the status
+  $('#advantageColor').text('Neither side');
+  $('#advantageNumber').text('0');
+  $('#advantageBar').attr({
+      'aria-valuenow': '0',
+      style: 'width: 50%',
+  });
 }
 
-$('#redoBtn').on('click', function () {
-  if (undo_stack.length >= 2) {
-    // Redo twice: Player's last move, followed by opponent's last move
-    redo();
-    window.setTimeout(function () {
-      redo();
-      window.setTimeout(function () {
-        showHint();
-      }, 250);
-    }, 250);
-  } else {
-    alert('Nothing to redo.');
-  }
+// Event listener for the reset button
+$('#resetGameBtn').on('click', function () {
+  resetGame();
 });
+
 
 $('#showHint').change(function () {
   window.setTimeout(showHint, 250);

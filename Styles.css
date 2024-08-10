@@ -172,16 +172,40 @@ main {
     margin-bottom: 10px;
 }
 
+#top-moves {
+    background-color: #ECD6A2;
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Espacio entre los botones */
+    margin-top: 20px; /* Espacio con los contenedores superiores */
+}
+
+/* Ajusta el contenedor de los botones al mismo ancho que los contenedores superiores */
+.buttons-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 80%; /* Ajusta este valor al ancho de tus contenedores superiores */
+}
+
 .highlight-white {
-    box-shadow: inset 0 0 3px 3px yellow;
+    box-shadow: inset 0 0 3px 3px white;
 }
 
 .highlight-black {
-    box-shadow: inset 0 0 3px 3px blue;
+    box-shadow: inset 0 0 3px 3px black;
 }
 
 .highlight-hint {
-    box-shadow: inset 0 0 3px 3px red;
+    box-shadow: inset 0 0 3px 3px rgb(0, 112, 255);
 }
 
 .no-underline {
