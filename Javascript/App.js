@@ -251,29 +251,36 @@ function minimax(game, depth, alpha, beta, isMaximizingPlayer, sum, color) {
   positionCount++;
   var children = game.ugly_moves({ verbose: true });
 
-  // Sort moves randomly, so the same move isn't always picked on ties
+  // Sort moves randomly to avoid same moves on ties
   children.sort(function (a, b) {
     return 0.5 - Math.random();
   });
 
-  var currMove;
-  // Maximum depth exceeded or node is a terminal node (no children)
   if (depth === 0 || children.length === 0) {
-    return [null, sum, []];
+    // Return sum as both min and max evaluated values at leaf nodes
+    return {
+      bestMove: null,
+      bestValue: sum,
+      topMoves: [],
+      minEvaluatedValue: sum,
+      maxEvaluatedValue: sum,
+    };
   }
 
-  // Find maximum/minimum from list of 'children' (possible moves)
   var maxValue = Number.NEGATIVE_INFINITY;
   var minValue = Number.POSITIVE_INFINITY;
+  var bestMove = null;
   var evaluatedMoves = [];
+  var overallMinEvaluatedValue = Number.POSITIVE_INFINITY;
+  var overallMaxEvaluatedValue = Number.NEGATIVE_INFINITY;
 
   for (var i = 0; i < children.length; i++) {
-    currMove = children[i];
-
-    // Note: in our case, the 'children' are simply modified game states
+    var currMove = children[i];
     var currPrettyMove = game.ugly_move(currMove);
     var newSum = evaluateBoard(game, currPrettyMove, sum, color);
-    var [childBestMove, childValue, childEvaluatedMoves] = minimax(
+
+    // Recursive call
+    var childResult = minimax(
       game,
       depth - 1,
       alpha,
@@ -285,23 +292,36 @@ function minimax(game, depth, alpha, beta, isMaximizingPlayer, sum, color) {
 
     game.undo();
 
-    // Store the current move and its evaluated value
-    evaluatedMoves.push({ move: currPrettyMove, value: childValue });
+    // Update overall min and max evaluated values
+    overallMinEvaluatedValue = Math.min(
+      overallMinEvaluatedValue,
+      childResult.minEvaluatedValue
+    );
+    overallMaxEvaluatedValue = Math.max(
+      overallMaxEvaluatedValue,
+      childResult.maxEvaluatedValue
+    );
+
+    // Store the current move and its evaluated value, along with min and max
+    evaluatedMoves.push({
+      move: currPrettyMove,
+      value: childResult.bestValue,
+      minEvaluatedValue: childResult.minEvaluatedValue,
+      maxEvaluatedValue: childResult.maxEvaluatedValue,
+    });
 
     if (isMaximizingPlayer) {
-      if (childValue > maxValue) {
-        maxValue = childValue;
+      if (childResult.bestValue > maxValue) {
+        maxValue = childResult.bestValue;
+        bestMove = currPrettyMove;
       }
-      if (childValue > alpha) {
-        alpha = childValue;
-      }
+      alpha = Math.max(alpha, maxValue);
     } else {
-      if (childValue < minValue) {
-        minValue = childValue;
+      if (childResult.bestValue < minValue) {
+        minValue = childResult.bestValue;
+        bestMove = currPrettyMove;
       }
-      if (childValue < beta) {
-        beta = childValue;
-      }
+      beta = Math.min(beta, minValue);
     }
 
     // Alpha-beta pruning
@@ -314,14 +334,17 @@ function minimax(game, depth, alpha, beta, isMaximizingPlayer, sum, color) {
   evaluatedMoves.sort((a, b) => b.value - a.value);
 
   // Return the top 3 moves
-  var topMoves = evaluatedMoves.slice(0, 3);
+  var topMoves = evaluatedMoves.slice(0, 5);
 
-  if (isMaximizingPlayer) {
-    return [topMoves[0]?.move || null, maxValue, topMoves];
-  } else {
-    return [topMoves[0]?.move || null, minValue, topMoves];
-  }
+  return {
+    bestMove: bestMove,
+    bestValue: isMaximizingPlayer ? maxValue : minValue,
+    topMoves: topMoves,
+    minEvaluatedValue: overallMinEvaluatedValue,
+    maxEvaluatedValue: overallMaxEvaluatedValue,
+  };
 }
+
 
 function checkStatus(color) {
   if (game.in_checkmate()) {
@@ -367,14 +390,15 @@ function updateAdvantage() {
 function getBestMove(game, color, currSum) {
   positionCount = 0;
 
+  var depth;
   if (color === 'b') {
-    var depth = parseInt($('#search-depth').find(':selected').text());
+    depth = parseInt($('#search-depth').find(':selected').text());
   } else {
-    var depth = parseInt($('#search-depth-white').find(':selected').text());
+    depth = parseInt($('#search-depth-white').find(':selected').text());
   }
 
   var d = new Date().getTime();
-  var [bestMove, bestMoveValue, topMoves] = minimax(
+  var result = minimax(
     game,
     depth,
     Number.NEGATIVE_INFINITY,
@@ -383,6 +407,9 @@ function getBestMove(game, color, currSum) {
     currSum,
     color
   );
+  var bestMove = result.bestMove;
+  var bestMoveValue = result.bestValue;
+  var topMoves = result.topMoves;
   var d2 = new Date().getTime();
   var moveTime = d2 - d;
   var positionsPerS = (positionCount * 1000) / moveTime;
@@ -391,7 +418,7 @@ function getBestMove(game, color, currSum) {
   $('#time').text(moveTime / 1000);
   $('#positions-per-s').text(Math.round(positionsPerS));
 
-  // Update the HTML with the top 3 moves
+  // Update the HTML with the top 3 moves, including score ranges
   updateTopMovesDisplay(topMoves);
 
   return [bestMove, bestMoveValue];
@@ -403,12 +430,17 @@ function updateTopMovesDisplay(topMoves) {
   topMoves.forEach((moveObj, index) => {
     const move = moveObj.move;
     const value = moveObj.value;
-    const moveText = `${index + 1}º ${move.color === 'w' ? 'White' : 'Black'} ${move.piece.toUpperCase()} ${move.from} to ${move.to} : ${value}`;
+    const minEval = moveObj.minEvaluatedValue;
+    const maxEval = moveObj.maxEvaluatedValue;
+    const moveText = `${index + 1}º ${move.color === 'w' ? 'White' : 'Black'} ${
+      move.piece.toUpperCase()
+    } ${move.from} to ${move.to} (Score: ${value} in range [${minEval}] to [${maxEval}])`;
     const moveElement = document.createElement('p');
     moveElement.textContent = moveText;
     topMovesContainer.appendChild(moveElement);
   });
 }
+
 
 /*
  * Makes the best legal move for the given color.

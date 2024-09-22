@@ -118,14 +118,6 @@ main {
     margin-left: 25px;
 }
 
-.info-box {
-    background-color: #ECD6A2;
-    color: #000;
-    padding: 15px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    margin-left: 25px;
-}
 
 .justify-content-center {
     justify-content: center;
@@ -141,18 +133,6 @@ main {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
-}
-
-.perfomance {
-    background-color: #000;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.perfomanceInfo {
-    margin: 2px;
 }
 
 .top {
@@ -177,6 +157,8 @@ main {
     color: black;
     border-radius: 5px;
     padding: 5px;
+    font-size: 0.9rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .buttons-container {
